@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 300px; margin: 50px auto; }
+        input { width: 100%; padding: 8px; margin: 5px 0; }
+        button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Signup</h2>
+        <input type="text" id="signupUsername" placeholder="Username">
+        <input type="email" id="signupEmail" placeholder="Email">
+        <input type="text" id="signupNr" placeholder="Phone Number">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <button onclick="signup()">Sign Up</button>
+    </div>
+    
+    <div class="container">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <script>
+        async function signup() {
+            const username = document.getElementById("signupUsername").value;
+            const email = document.getElementById("signupEmail").value;
+            const nr = document.getElementById("signupNr").value;
+            const password = document.getElementById("signupPassword").value;
+
+            const res = await fetch("http://localhost:3000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, nr, password })
+            });
+            const data = await res.json();
+            alert(data.message);
+        }
+
+        async function login() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            const res = await fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            alert(data.message);
+        }
+    </script>
+</body>
+</html>
